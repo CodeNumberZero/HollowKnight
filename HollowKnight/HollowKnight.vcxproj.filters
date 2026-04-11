@@ -24,12 +24,33 @@
     <ClCompile Include="Timer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Atlas.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourcesMgr.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MyVector.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Atlas.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourcesMgr.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
