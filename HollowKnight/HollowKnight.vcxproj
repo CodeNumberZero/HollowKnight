@@ -131,21 +131,27 @@
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="Atlas.cpp" />
+    <ClCompile Include="Character.cpp" />
     <ClCompile Include="CollisionBox.cpp" />
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="HollowKnight.cpp" />
     <ClCompile Include="MyVector.cpp" />
     <ClCompile Include="ResourcesMgr.cpp" />
+    <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="StateNode.cpp" />
     <ClCompile Include="Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Atlas.h" />
+    <ClInclude Include="Character.h" />
     <ClInclude Include="CollisionBox.h" />
     <ClInclude Include="CollisionLayer.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="MyVector.h" />
     <ClInclude Include="ResourcesMgr.h" />
+    <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="StateNode.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>

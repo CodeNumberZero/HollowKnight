@@ -33,10 +33,6 @@ int main()
         MessageBox(hwnd, err_msg, _T("资源加载失败"), MB_OK | MB_ICONERROR);                // MessageBox是WindowsAPI函数,显示对话框;设置显示的消息内容、对话框标题以及标志位MB_OK | MB_ICONERROR表示显示"确定"按钮+错误图标
         return -1;
     }
-    //catch (const std::exception& e) {    // 捕获其他标准异常
-    //    MessageBoxA(hwnd, e.what(), "未知错误", MB_OK | MB_ICONERROR);
-    //    return -1;
-    //}
 
     /*
         固定帧率(144 FPS)的游戏主循环,通过精确的时间控制让每一帧的时间间隔保持一致
