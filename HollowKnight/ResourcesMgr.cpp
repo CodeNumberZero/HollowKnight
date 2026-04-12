@@ -118,7 +118,7 @@ void ResourcesMgr::flip_atlas(const std::string& src_id, const std::string& dst_
 std::shared_ptr<ResourcesMgr> ResourcesMgr::GetInstance() {
 	static std::once_flag flag;                         // 标志位，用于标记std::call_once调用的目标函数是否已执行  
 	std::call_once(flag, []() {                         // std::call_once 是C++11引入的线程安全工具，核心作用是保证某个函数/操作在多线程环境下"仅被执行一次"(即使多个线程同时调用)
-		//_instance = std::make_shared<T>();            // 不能使用这种方式构造。原因:make_shared需要调用构造函数,而这里的托管对象是单例,构造设置为私有了,make_shared无权限调用
+		//_instance = std::make_shared<ResourcesMgr>();            // 不能使用这种方式构造。原因:make_shared需要调用构造函数,而这里的托管对象是单例,构造设置为私有了,make_shared无权限调用
 		_instance = std::shared_ptr<ResourcesMgr>(new ResourcesMgr);          // 能用new进行构造是因为：new是在类的成员函数内使用的，而类的成员函数本身就有权限访问私有构造函数
 		});
 	return _instance;

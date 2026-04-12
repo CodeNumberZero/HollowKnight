@@ -23,6 +23,7 @@ int main()
     HWND hwnd = initgraph(1280, 720, EW_SHOWCONSOLE);        // EX_SHOWCONSOLE标志位表示显示控制台窗口;返回值是窗口句柄(Windows 窗口的唯一标识符)
     SetWindowText(hwnd, _T("Hollow Knight"));                // 设置窗口标题
 
+    // 加载资源
     try {
         ResourcesMgr::GetInstance()->load();
     }
