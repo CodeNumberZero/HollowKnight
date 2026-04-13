@@ -136,6 +136,7 @@
     <ClCompile Include="CollisionMgr.cpp" />
     <ClCompile Include="HollowKnight.cpp" />
     <ClCompile Include="MyVector.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="ResourcesMgr.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="StateNode.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="CollisionLayer.h" />
     <ClInclude Include="CollisionMgr.h" />
     <ClInclude Include="MyVector.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="ResourcesMgr.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="StateNode.h" />

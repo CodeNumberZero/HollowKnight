@@ -14,7 +14,7 @@ class Character
 {
 public:
 	Character();
-	virtual ~Character();
+	~Character();
 
 protected:
 	struct AnimationGroup                                   // 角色的左右动画是成对存在的,所以封装在一个动画组中进行同一管理
@@ -39,7 +39,7 @@ protected:
 	std::shared_ptr<CollisionBox> hit_box = nullptr;		// 攻击碰撞箱
 	std::shared_ptr<CollisionBox> hurt_box = nullptr;		// 受击碰撞箱
 	std::shared_ptr<AnimationGroup> current_animation = nullptr;                     // 当前角色动画
-	std::unordered_map<std::string, std::shared_ptr<AnimationGroup>> animatiuon_pool;// 角色动画池 
+	std::unordered_map<std::string, std::shared_ptr<AnimationGroup>> animation_pool;// 角色动画池 
 
 	void decrease_hp();
 	int get_hp() const;

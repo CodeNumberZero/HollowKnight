@@ -16,7 +16,7 @@ Character::Character()
     timer_invulnerable_blink.set_one_shot(false);
     timer_invulnerable_blink.set_on_timeout([&]() {
         is_blink_invisible = !is_blink_invisible;
-        });
+    });
 }
 
 Character::~Character()
@@ -79,6 +79,7 @@ std::shared_ptr<CollisionBox> Character::get_hurt_box()
     return hurt_box;
 }
 
+// 判断角色是否处于地面
 bool Character::is_on_floor() const
 {
     return position.y >= FLOOR_Y;
@@ -151,7 +152,7 @@ void Character::switch_state(const std::string& id)
 
 void Character::set_animation(const std::string& id)
 {
-    current_animation = animatiuon_pool[id];
+    current_animation = animation_pool[id];
     current_animation->left.reset();                         // 需要注意当设置新动画时需要重置具体的左右动画对象状态
     current_animation->right.reset();
 }
