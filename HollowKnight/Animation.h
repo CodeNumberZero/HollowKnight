@@ -1,18 +1,12 @@
 #pragma once
 #include "Atlas.h"
+#include "config.h"
 #include "MyVector.h"
 #include "util.h"
 #include "Timer.h"
 
 #include <functional>
 #include <vector>
-
-// 锚点模式,定义动画帧的对齐方式
-enum class AnchorMode 
-{
-	Centered,         // 中心对齐
-	BottomCentered    // 底部中心对齐	
-};
 
 // 动画类,使用定时器进行驱动
 class Animation

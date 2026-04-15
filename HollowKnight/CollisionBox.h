@@ -1,8 +1,8 @@
 #pragma once
 #include <functional>
 
+#include "config.h"
 #include "MyVector.h"
-#include "CollisionLayer.h"
 
 class CollisionMgr;
 

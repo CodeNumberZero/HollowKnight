@@ -82,8 +82,8 @@ void Animation::on_update(float delta) {
 
 void Animation::on_render()
 {
-	std::cout << "idx_frame = " << idx_frame << std::endl;
-	std::cout << "frame_list size = " << frame_list.size() << std::endl;
+	//std::cout << "idx_frame = " << idx_frame << std::endl;
+	//std::cout << "frame_list size = " << frame_list.size() << std::endl;
 	const Frame& frame = frame_list[idx_frame];
 
 	Rect rect_dst;

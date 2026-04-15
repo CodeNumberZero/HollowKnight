@@ -8,13 +8,15 @@
 #include <string>
 #include <unordered_map>
 
+#include "config.h"
+
 /*注意：图像坐标系是x轴向右为正方向,y轴向下为正方向*/
 // 游戏角色基类
 class Character
 {
 public:
 	Character();
-	~Character();
+	virtual ~Character();
 
 protected:
 	struct AnimationGroup                                   // 角色的左右动画是成对存在的,所以封装在一个动画组中进行同一管理
@@ -23,8 +25,6 @@ protected:
 		Animation right;
 	};
 
-	const float FLOOR_Y = 620;                              // 地板的竖直方向(游戏窗口是竖屏坐标系,Y越大越靠下,屏幕上Y=620这条水平线,就是角色能站立的地面)
-	const float GRAVITY = 980 * 2;                          // 重力大小
 	int hp = 10;											// 角色生命值
 	MyVector position;										// 角色脚底位置
 	MyVector velocity;										// 角色速度

@@ -5,21 +5,8 @@
 #include <unordered_map>
 
 #include "Atlas.h"
+#include "config.h"
 #include "util.h"
-
-// 两种资源信息描述结构体
-struct ImageResInfo
-{
-	std::string id;
-	LPCTCH path;                                                        // LPCTSTR是指向"通用常量字符串"的长指针,它是Long Pointer to Constant TCHAR String的缩写。简单说它就是const TCHAR*的别名
-};
-
-struct AtlasResInfo 
-{
-	std::string id;
-	LPCTCH path;
-	int num_frame = 0;                                                  // 相较于图片资源的信息,图集资源的信息需要额外提供图集中图片的数量,方便后续自动加载
-};
 
 // 资源管理器类,使用单例模式
 class ResourcesMgr

@@ -1,17 +1,13 @@
 #pragma once
 #include "Character.h"
-
-// 四个攻击方向:会影响到不同的攻击特效播放以及碰撞箱位置
-enum class AttackDirection {                         
-	Up, Down, Left, Right
-};
+#include "config.h"
 
 // 玩家类
 class Player : public Character
 {
 public:
 	Player();
-	virtual ~Player();
+	~Player();
 
 	void on_input(const ExMessage& msg) override;        // 键鼠消息处理方法
 	void on_update(float delta) override;
@@ -35,13 +31,8 @@ public:
 	void on_land();										// 落地逻辑
 	void on_roll();                                     // 翻滚逻辑
 	void on_attack();									// 攻击逻辑
-private:
-	const float CD_ROLL = 0.75f;
-	const float CD_ATTACK = 0.5f;
-	const float SPEED_RUN = 300.0f;
-	const float SPEED_JUMP = 780.0f;
-	const float SPEED_ROLL = 800.0f;
 
+private:
 	Timer timer_roll_cd;                                 // 翻滚冷却时间
 	bool is_rolling = false;                             // 是否处于翻滚状态
 	bool is_roll_cd_comp = true;                         // 是否已经冷却结束
