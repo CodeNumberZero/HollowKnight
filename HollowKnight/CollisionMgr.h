@@ -9,6 +9,8 @@ class CollisionMgr
 {
 private:
 	CollisionMgr() = default;
+	CollisionMgr(const CollisionMgr&) = delete;
+	CollisionMgr& operator=(const CollisionMgr&) = delete;
 
 	static std::shared_ptr<CollisionMgr> _instance;
 	std::vector<std::shared_ptr<CollisionBox>> CollisionBoxList;   // 游戏中所有的碰撞箱对象都要放到这个列表中进行更新检测(如果场景非常大或者游戏对象非常多可以扩展使用其他数据结构存储碰撞箱,例如四叉树等,以减少碰撞的相交性运算)

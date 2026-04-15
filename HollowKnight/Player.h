@@ -46,9 +46,9 @@ private:
 	bool is_rolling = false;                             // 是否处于翻滚状态
 	bool is_roll_cd_comp = true;                         // 是否已经冷却结束
 
-	Timer timer_attack_cd;
-	bool is_attacking = false;
-	bool is_attack_cd_comp = true;
+	Timer timer_attack_cd;                               // 攻击冷却时间
+	bool is_attacking = false;                           // 是否处于攻击状态
+	bool is_attack_cd_comp = true;                       // 是否已经冷却结束
 
 	bool is_left_key_down = false;                       // 定义相应的按键状态。这样做的好处是:对应的按键消息出现时,便可只修改变量的值,其他部分的代码逻辑也只需要获取变量值,而不用关注当前是哪个物理按键被按下,这种思路通过封装就可以实现可配置的自定义按键功能
 	bool is_right_key_down = false;
@@ -61,7 +61,7 @@ private:
 	Animation animation_slash_left;
 	Animation animation_slash_right;
 	AttackDirection attack_direction = AttackDirection::Right;
-	std::shared_ptr<Animation> current_slash_animation = nullptr;
+	Animation* current_slash_animation = nullptr;
 
 	// 角色在起跳和落地时会有烟尘特效,因此定义了两组特效需要的可见性标志和动画对象
 	bool is_jump_vfx_visible = false;

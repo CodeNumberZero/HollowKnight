@@ -22,6 +22,7 @@ static const std::vector<ImageResInfo> image_info_list =
 	{"player_vfx_land",			_T(R"(resources\player\vfx_land.png)")},
 };
 
+
 // 通过列表初始化的方法定义图集资源信息列表
 static const std::vector<AtlasResInfo> atlas_info_list =
 {
@@ -128,6 +129,7 @@ void ResourcesMgr::load()
 {
 	// 遍历图片和图集资源信息列表
 	for (const auto& info : image_info_list) {
+		//std::cout << info.id << std::endl;
 		std::shared_ptr<IMAGE> image = std::make_shared<IMAGE>();
 		loadimage(image.get(), info.path);                                   // 第一个参数为保存图像的IMAGE对象指针,第二个参数为图片文件名
 		if (!check_image_valid(image))                                       // 如果图片加载失败则抛出异常
@@ -136,8 +138,10 @@ void ResourcesMgr::load()
 	}
 
 	for (const auto& info : atlas_info_list) {
+		//std::cout << info.id << std::endl;
 		std::shared_ptr<Atlas> atlas = std::make_shared<Atlas>();
 		atlas->load(info.path, info.num_frame);
+		//std::cout << atlas->get_size() << std::endl;
 		for (int i = 0; i < atlas->get_size(); ++i) {
 			auto image = atlas->get_image(i);
 			if (!check_image_valid(image))

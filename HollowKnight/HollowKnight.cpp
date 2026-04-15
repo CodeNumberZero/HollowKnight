@@ -3,8 +3,11 @@
 #include <iostream>
 #include <thread>
 
+#include "BulletTimeMgr.h"
 #include "util.h"
 #include "ResourcesMgr.h"
+#include "CollisionMgr.h"
+#include "CharacterMgr.h"
 
 // 绘制背景
 static void draw_backgroud() {
@@ -30,7 +33,7 @@ int main()
     catch (const LPCTSTR id) {
         TCHAR err_msg[512];
         _stprintf_s(err_msg, _T("无法加载: %s"), id);
-        MessageBox(hwnd, err_msg, _T("资源加载失败"), MB_OK | MB_ICONERROR);                // MessageBox是WindowsAPI函数,显示对话框;设置显示的消息内容、对话框标题以及标志位MB_OK | MB_ICONERROR表示显示"确定"按钮+错误图标
+        MessageBox(hwnd, err_msg, _T("资源加载失败"), MB_OK | MB_ICONERROR);                // MessageBox是WindowsAPI函数,原生弹窗函数,显示对话框;设置显示的消息内容、对话框标题以及标志位MB_OK | MB_ICONERROR表示显示"确定"按钮+错误图标
         return -1;
     }
 
@@ -49,18 +52,24 @@ int main()
     while (!is_quit) {
         while (peekmessage(&msg)) {                          // 非阻塞地获取一条消息,有消息返回true,无消息返回false;getmessage函数会阻塞:没有消息时会等待
             // 处理消息
+            CharacterMgr::GetInstance()->on_input(msg);
         }
 
         std::chrono::steady_clock::time_point frame_start = std::chrono::steady_clock::now();
         std::chrono::duration<float> delta = std::chrono::duration<float>(frame_start - last_tick);   // 计算从上一帧到这一帧经过的时间
 
         // 处理更新
+        float scaled_delta = BulletTimeMgr::GetInstance()->on_update(delta.count());// 将子弹时间管理器缩放后的时间作为角色管理器更新所需的时间
+        CharacterMgr::GetInstance()->on_update(scaled_delta);// count()把chrono时间对象提取成普通的float数字
+        CollisionMgr::GetInstance()->ProcessCollide();
 
         setbkcolor(RGB(0, 0, 0));                            // 设置绘图背景色为黑色
         cleardevice();                                       // 用当前背景颜色清空绘图设备;效果:整个窗口变成黑色,清除上一帧的所有内容
 
         // 处理绘图
         draw_backgroud();
+        CharacterMgr::GetInstance()->on_render();
+        CollisionMgr::GetInstance()->OnDebugRender();
 
         FlushBatchDraw();                                    // 将后台缓冲区的内容一次性显示到屏幕
     

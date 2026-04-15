@@ -1,4 +1,6 @@
+#include "BulletTimeMgr.h"
 #include "Player.h"
+#include "PlayerStateNode.h"
 #include "ResourcesMgr.h"
 #include <cmath>
 
@@ -36,100 +38,105 @@ Player::Player()
 		is_attack_cd_comp = true;
 	});
 
-	// 动画对象的初始化(注意不同动画的帧数量是不同的)
+	 /*
+		动画对象的初始化
+		注意:1、不同动画的帧数量是不同的 
+			2、animation_attack、animation_attack_left等变量必须是引用,否则对他们的设置和修改只是对局部变量操作,而局部变量在离开作用于后就回收了,
+			   无法应用到animation_pool内,后续对animation_pool进行索引访问时会出现内存问题(踩过坑)
+	 */
 	// 角色攻击动画
-	std::shared_ptr<AnimationGroup> animation_attack = animation_pool["attack"];
-	Animation& animation_attack_left = animation_attack->left;
+	AnimationGroup& animation_attack = animation_pool["attack"];
+	Animation& animation_attack_left = animation_attack.left;
 	animation_attack_left.set_interval(0.05f);                                                         // 设置帧间隔
 	animation_attack_left.set_loop(false);                                                             // 不循环播放
 	animation_attack_left.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_attack_left.add_frame(ResourcesMgr::GetInstance()->find_image("player_attack_left"), 5); // 将资源管理器的图片添加为动画对象的帧
 
-	Animation& animation_attack_right = animation_attack->right;
+	Animation& animation_attack_right = animation_attack.right;
 	animation_attack_right.set_interval(0.05f);
 	animation_attack_right.set_loop(false);
 	animation_attack_right.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_attack_right.add_frame(ResourcesMgr::GetInstance()->find_image("player_attack_right"), 5);
 
 	// 角色死亡动画
-	std::shared_ptr<AnimationGroup> animation_dead = animation_pool["dead"];
-	Animation& animation_dead_left = animation_dead->left;
+	AnimationGroup& animation_dead = animation_pool["dead"];
+	Animation& animation_dead_left = animation_dead.left;
 	animation_dead_left.set_interval(0.1f);
 	animation_dead_left.set_loop(false);
 	animation_dead_left.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_dead_left.add_frame(ResourcesMgr::GetInstance()->find_image("player_dead_left"), 6);
 
-	Animation& animation_dead_right = animation_dead->right;
+	Animation& animation_dead_right = animation_dead.right;
 	animation_dead_right.set_interval(0.1f);
 	animation_dead_right.set_loop(false);
 	animation_dead_right.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_dead_right.add_frame(ResourcesMgr::GetInstance()->find_image("player_dead_right"), 6);
 
 	// 角色落下动画
-	std::shared_ptr<AnimationGroup> animation_fall = animation_pool["fall"];
-	Animation& animation_fall_left = animation_fall->left;
+	AnimationGroup& animation_fall = animation_pool["fall"];
+	Animation& animation_fall_left = animation_fall.left;
 	animation_fall_left.set_interval(0.15f);
 	animation_fall_left.set_loop(true);
 	animation_fall_left.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_fall_left.add_frame(ResourcesMgr::GetInstance()->find_image("player_fall_left"), 5);
 
-	Animation& animation_fall_right = animation_fall->right;
+	Animation& animation_fall_right = animation_fall.right;
 	animation_fall_right.set_interval(0.15f);
 	animation_fall_right.set_loop(true);
 	animation_fall_right.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_fall_right.add_frame(ResourcesMgr::GetInstance()->find_image("player_fall_right"), 5);
 
 	// 角色空闲动画
-	std::shared_ptr<AnimationGroup> animation_idle = animation_pool["idle"];
-	Animation& animation_idle_left = animation_idle->left;
+	AnimationGroup& animation_idle = animation_pool["idle"];
+	Animation& animation_idle_left = animation_idle.left;
 	animation_idle_left.set_interval(0.15f);
 	animation_idle_left.set_loop(true);
 	animation_idle_left.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_idle_left.add_frame(ResourcesMgr::GetInstance()->find_image("player_idle_left"), 5);
 
-	Animation& animation_idle_right = animation_idle->right;
+	Animation& animation_idle_right = animation_idle.right;
 	animation_idle_right.set_interval(0.15f);
 	animation_idle_right.set_loop(true);
 	animation_idle_right.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_idle_right.add_frame(ResourcesMgr::GetInstance()->find_image("player_idle_right"), 5);
 
 	// 角色跳跃动画
-	std::shared_ptr<AnimationGroup> animation_jump = animation_pool["jump"];
-	Animation& animation_jump_left = animation_jump->left;
+	AnimationGroup& animation_jump = animation_pool["jump"];
+	Animation& animation_jump_left = animation_jump.left;
 	animation_jump_left.set_interval(0.15f);
 	animation_jump_left.set_loop(false);
 	animation_jump_left.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_jump_left.add_frame(ResourcesMgr::GetInstance()->find_image("player_jump_left"), 5);
 
-	Animation& animation_jump_right = animation_jump->right;
+	Animation& animation_jump_right = animation_jump.right;
 	animation_jump_right.set_interval(0.15f);
 	animation_jump_right.set_loop(false);
 	animation_jump_right.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_jump_right.add_frame(ResourcesMgr::GetInstance()->find_image("player_jump_right"), 5);
 
 	// 角色翻滚动画
-	std::shared_ptr<AnimationGroup> animation_roll = animation_pool["roll"];
-	Animation& animation_roll_left = animation_roll->left;
+	AnimationGroup& animation_roll = animation_pool["roll"];
+	Animation& animation_roll_left = animation_roll.left;
 	animation_roll_left.set_interval(0.05f);
 	animation_roll_left.set_loop(false);
 	animation_roll_left.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_roll_left.add_frame(ResourcesMgr::GetInstance()->find_image("player_roll_left"), 7);
 
-	Animation& animation_roll_right = animation_roll->right;
+	Animation& animation_roll_right = animation_roll.right;
 	animation_roll_right.set_interval(0.05f);
 	animation_roll_right.set_loop(false);
 	animation_roll_right.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_roll_right.add_frame(ResourcesMgr::GetInstance()->find_image("player_roll_right"), 7);
 
 	// 角色奔跑动画
-	std::shared_ptr<AnimationGroup> animation_run = animation_pool["run"];
-	Animation& animation_run_left = animation_run->left;
+	AnimationGroup& animation_run = animation_pool["run"];
+	Animation& animation_run_left = animation_run.left;
 	animation_run_left.set_interval(0.075f);
 	animation_run_left.set_loop(true);
 	animation_run_left.set_anchor_mode(AnchorMode::BottomCentered);
 	animation_run_left.add_frame(ResourcesMgr::GetInstance()->find_image("player_run_left"), 10);
 
-	Animation& animation_run_right = animation_run->right;
+	Animation& animation_run_right = animation_run.right;
 	animation_run_right.set_interval(0.075f);
 	animation_run_right.set_loop(true);
 	animation_run_right.set_anchor_mode(AnchorMode::BottomCentered);
@@ -168,7 +175,16 @@ Player::Player()
 	animation_land_vfx.add_frame(ResourcesMgr::GetInstance()->find_image("player_vfx_land"), 2);
 	animation_land_vfx.set_on_finished([&]() {is_land_vfx_visible = false; });
 
-	// TODO 状态机初始化
+	// 状态机初始化,注册不同的状态节点实例,并设置状态机的入口为闲置状态
+	state_machine.register_state("attack", std::make_shared<PlayerAttackState>());
+	state_machine.register_state("dead", std::make_shared<PlayerDeadState>());
+	state_machine.register_state("fall", std::make_shared<PlayerFallState>());
+	state_machine.register_state("idle", std::make_shared<PlayerIdleState>());
+	state_machine.register_state("jump", std::make_shared<PlayerJumpState>());
+	state_machine.register_state("roll", std::make_shared<PlayerRollState>());
+	state_machine.register_state("run", std::make_shared<PlayerRunState>());
+
+	state_machine.set_entry("idle");
 }
 
 Player::~Player()
@@ -233,10 +249,14 @@ void Player::on_input(const ExMessage& msg)
 		is_attack_key_down = false;
 		break;
 	case WM_RBUTTONDOWN:                        // 鼠标右键按下
-		// TODO：进入子弹时间
+		play_audio(_T("bullet_time"), false);
+		BulletTimeMgr::GetInstance()->set_status(Status::Entering);
 		break;
 	case WM_RBUTTONUP:
-		// TODO: 退出子弹时间
+		stop_audio(_T("bullet_time"));
+		BulletTimeMgr::GetInstance()->set_status(Status::Exiting);
+		break;
+	default:
 		break;
 	}
 }
@@ -359,16 +379,16 @@ void Player::on_attack()
 	switch (attack_direction)                                                           // 再根据朝向选择不同方向的特效动画
 	{
 	case AttackDirection::Up:
-		current_slash_animation = std::shared_ptr<Animation>(&animation_slash_up);
+		current_slash_animation = &animation_slash_up;
 		break;
 	case AttackDirection::Down:
-		current_slash_animation = std::shared_ptr<Animation>(&animation_slash_down);
+		current_slash_animation = &animation_slash_down;
 		break;
 	case AttackDirection::Left:
-		current_slash_animation = std::shared_ptr<Animation>(&animation_slash_left);
+		current_slash_animation = &animation_slash_left;
 		break;
 	case AttackDirection::Right:
-		current_slash_animation = std::shared_ptr<Animation>(&animation_slash_right);
+		current_slash_animation = &animation_slash_right;
 		break;
 	}
 	current_slash_animation->set_position(get_logic_center());                          // 设置攻击动画的初始位置在角色的逻辑中心处

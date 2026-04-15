@@ -57,3 +57,7 @@ inline void stop_audio(LPCTSTR id)
 	mciSendString(str_cmd, NULL, 0, NULL);
 }
 
+// 生成 [min, max] 之间随机整数
+inline int range_random(int min, int max) {
+	return min + rand() % (max - min + 1);
+}

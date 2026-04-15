@@ -152,7 +152,8 @@ void Character::switch_state(const std::string& id)
 
 void Character::set_animation(const std::string& id)
 {
-    current_animation = animation_pool[id];
+    current_animation = &animation_pool[id];
+
     current_animation->left.reset();                         // 需要注意当设置新动画时需要重置具体的左右动画对象状态
     current_animation->right.reset();
 }

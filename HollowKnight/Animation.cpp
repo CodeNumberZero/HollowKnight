@@ -48,7 +48,7 @@ void Animation::set_on_finished(std::function<void()> on_finished)
 }
 
 void Animation::add_frame(std::shared_ptr<IMAGE> image, int num_h)
-{
+{ 
 	int width = image->getwidth();
 	int height = image->getheight();
 	int width_frame = width / num_h;                     // Ã¿Ö¡µÄ¿í¶È
@@ -82,6 +82,8 @@ void Animation::on_update(float delta) {
 
 void Animation::on_render()
 {
+	std::cout << "idx_frame = " << idx_frame << std::endl;
+	std::cout << "frame_list size = " << frame_list.size() << std::endl;
 	const Frame& frame = frame_list[idx_frame];
 
 	Rect rect_dst;

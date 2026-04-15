@@ -37,10 +37,11 @@ protected:
 	Timer timer_invulnerable_status;						// 无敌状态定时器(控制无敌状态的时长)
 	bool is_blink_invisible = false;						// 当前是否处于闪烁的不可见帧
 	std::shared_ptr<CollisionBox> hit_box = nullptr;		// 攻击碰撞箱
-	std::shared_ptr<CollisionBox> hurt_box = nullptr;		// 受击碰撞箱
-	std::shared_ptr<AnimationGroup> current_animation = nullptr;                     // 当前角色动画
-	std::unordered_map<std::string, std::shared_ptr<AnimationGroup>> animation_pool;// 角色动画池 
+	std::shared_ptr<CollisionBox> hurt_box = nullptr;		// 受击碰撞箱                 
+	AnimationGroup* current_animation = nullptr;            // 当前角色动画
+	std::unordered_map<std::string, AnimationGroup> animation_pool; // 角色动画池 
 
+public:
 	void decrease_hp();
 	int get_hp() const;
 	void set_position(const MyVector& position);
