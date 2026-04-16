@@ -6,6 +6,7 @@
 
 Player::Player()
 {
+	hp = PLAYER_HP;
 	is_facing_left = false;                                               // 游戏开始时角色面朝右方
 	position = {250, 200};                                                // 设置角色的初始位置
 	logic_height = 150;                                                   // 设置角色的逻辑高度

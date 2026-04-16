@@ -21,10 +21,41 @@ static void draw_backgroud() {
     putimage_ex(img_backgroud.get(), &rect_dst);
 }
 
+static void draw_remain_hp()
+{
+    static auto img_ui_heart = ResourcesMgr::GetInstance()->find_image("ui_heart");
+    Rect rect_dst_player = { 0, 10, img_ui_heart->getwidth(), img_ui_heart->getheight() };
+    Rect rect_dst_enemy = { 0, 10, img_ui_heart->getwidth(), img_ui_heart->getheight() };
+    for (int i = 0; i < CharacterMgr::GetInstance()->get_player()->get_hp(); i++)
+    {
+        rect_dst_player.x = 10 + i * 40;                    // 玩家生命值绘制在左上角
+        putimage_ex(img_ui_heart.get(), &rect_dst_player);
+    }
+    for (int i = 0; i < CharacterMgr::GetInstance()->get_enemy()->get_hp(); i++)
+    {
+        rect_dst_enemy.x = getwidth() - 10 - (i + 1) * 40;  // 敌人生命值绘制在右上角
+        putimage_ex(img_ui_heart.get(), &rect_dst_enemy);
+    }
+}
+
 int main()
 {
-    HWND hwnd = initgraph(1280, 720, EW_SHOWCONSOLE);        // EX_SHOWCONSOLE标志位表示显示控制台窗口;返回值是窗口句柄(Windows 窗口的唯一标识符)
-    SetWindowText(hwnd, _T("Hollow Knight"));                // 设置窗口标题
+    bool is_render_collision_box = false;                       // 是否显示碰撞箱
+
+    //HWND hwnd = initgraph(1280, 720, EW_SHOWCONSOLE);        // EX_SHOWCONSOLE标志位表示显示控制台窗口;返回值是窗口句柄(Windows 窗口的唯一标识符)
+    HWND hwnd = initgraph(1280, 720);                           // 不显示控制台
+    SetWindowText(hwnd, _T("Hollow Knight"));                   // 设置窗口标题
+
+    // 游戏开始前弹出操作提示
+    MessageBox(hwnd,
+        _T("操作说明：\n")
+        _T("跳跃：W, 空格, 上方向键\n")
+        _T("左移：A, 左方向键\n")
+        _T("翻滚：S, 下方向键\n")
+        _T("右移：D, 右方向键\n"),
+        _T("游戏操作说明"),
+        MB_OK | MB_ICONINFORMATION
+    );
 
     // 加载资源
     try {
@@ -36,6 +67,8 @@ int main()
         MessageBox(hwnd, err_msg, _T("资源加载失败"), MB_OK | MB_ICONERROR);                // MessageBox是WindowsAPI函数,原生弹窗函数,显示对话框;设置显示的消息内容、对话框标题以及标志位MB_OK | MB_ICONERROR表示显示"确定"按钮+错误图标
         return -1;
     }
+
+    play_audio(_T("bgm"), true);
 
     /*
         固定帧率(144 FPS)的游戏主循环,通过精确的时间控制让每一帧的时间间隔保持一致
@@ -56,10 +89,10 @@ int main()
         }
 
         std::chrono::steady_clock::time_point frame_start = std::chrono::steady_clock::now();
-        std::chrono::duration<float> delta = std::chrono::duration<float>(frame_start - last_tick);   // 计算从上一帧到这一帧经过的时间
+        std::chrono::duration<float> delta = std::chrono::duration<float>(frame_start - last_tick);     // 计算从上一帧到这一帧经过的时间
 
         // 处理更新
-        float scaled_delta = BulletTimeMgr::GetInstance()->on_update(delta.count());// 将子弹时间管理器缩放后的时间作为角色管理器更新所需的时间
+        float scaled_delta = BulletTimeMgr::GetInstance()->on_update(delta.count());                    // 将子弹时间管理器缩放后的时间作为角色管理器更新所需的时间
         CharacterMgr::GetInstance()->on_update(scaled_delta);// count()把chrono时间对象提取成普通的float数字
         CollisionMgr::GetInstance()->ProcessCollide();
 
@@ -69,7 +102,9 @@ int main()
         // 处理绘图
         draw_backgroud();
         CharacterMgr::GetInstance()->on_render();
-        CollisionMgr::GetInstance()->OnDebugRender();
+        if(is_render_collision_box)
+            CollisionMgr::GetInstance()->OnDebugRender();
+        draw_remain_hp();
 
         FlushBatchDraw();                                    // 将后台缓冲区的内容一次性显示到屏幕
     
@@ -82,6 +117,7 @@ int main()
     }
 
     EndBatchDraw();                                          // 结束批量绘图模式的函数,它会将缓冲区中所有未完成的绘图操作一次性输出到屏幕上
+    closegraph();
 
     return 0;
 }

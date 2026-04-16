@@ -5,6 +5,7 @@
 const float FLOOR_Y = 620;                          // µØ°åµÄÊúÖ±·½Ïò(ÓÎÏ·´°¿ÚÊÇÊúÆÁ×ø±êÏµ,YÔ½´óÔ½¿¿ÏÂ,ÆÁÄ»ÉÏY=620ÕâÌõË®Æ½Ïß,¾ÍÊÇ½ÇÉ«ÄÜÕ¾Á¢µÄµØÃæ)
 const float GRAVITY = 980 * 2;                      // ÖØÁ¦´óÐ¡
 
+const int PLAYER_HP = 8;							// Íæ¼ÒÑªÁ¿
 const float CD_ROLL = 0.75f;						// ·­¹öÀäÈ´
 const float CD_ATTACK = 0.5f;						// ¹¥»÷ÀäÈ´
 const float SPEED_RUN = 300.0f;						// ±¼ÅÜËÙ¶È
@@ -16,8 +17,14 @@ const float DST_DELTA_FACTOR = 0.35f;               // ÍêÈ«½øÈë×Óµ¯Ê±¼äºóÖ¡¸üÐÂÊ
 const float DST_COLOR_FACTOR = 0.35f;               // ÍêÈ«½øÈë×Óµ¯Ê±¼äºó»­ÃæÉ«²Ê¸Ä±ä±ÈÀý
 
 const int ENEMY_HP = 15;							// µÐÈËÑªÁ¿
-const float SPEED_DASH = 1500.0f;					// µÐÈË³å´ÌËÙ¶È
-const float SPEED_MOVE = 1250.0f;                   // µÐÈËÊÍ·ÅµÄ·É½£·ÉÐÐËÙ¶È
+const int ENEMY_HP_THRESHOLD = 7;					// µÐÈË½øÈë¶þ½×¶ÎµÄÑªÁ¿ãÐÖµ
+const float ENEMY_BARB_SPEED_DASH = 1500.0f;		// µÐÈËÊÍ·ÅµÄ´ÌÇò³å´ÌËÙ¶È
+const float ENEMY_SWORD_SPEED_MOVE = 1250.0f;       // µÐÈËÊÍ·ÅµÄ·É½£·ÉÐÐËÙ¶È
+const float ENEMY_SPEED_DASH_IN_AIR = 1500.0f;      // µÐÈËÔÚ¿ÕÖÐµÄ³å´ÌËÙ¶È
+const float ENEMY_SPEED_DASH_ON_FLOOR = 1000.0f;    // µÐÈËÔÚµØÃæµÄ³å´ÌËÙ¶È
+const float ENEMY_SPEED_JUMP = 1000.0f;             // µÐÈËÌøÔ¾ËÙ¶È
+const float ENEMY_MIN_DIS = 350.f;					// µÐÈË±¼ÅÜ×´Ì¬ÏÂÏëÇÐ»»µ½ÆäËû×´Ì¬Ê±ÐèÒªÓëÍæ¼ÒÏà¸ôµÄ×îÐ¡¾àÀë
+const float ENEMY_SPEED_RUN = 500.0f;               // µÐÈË±¼ÅÜËÙ¶È
 
 struct ImageResInfo									// Í¼Æ¬×ÊÔ´ÐÅÏ¢
 {

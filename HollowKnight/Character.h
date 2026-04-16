@@ -25,7 +25,7 @@ protected:
 		Animation right;
 	};
 
-	int hp = 10;											// 角色生命值
+	int hp = 8;												// 角色生命值
 	MyVector position;										// 角色脚底位置
 	MyVector velocity;										// 角色速度
 	float logic_height = 0;									// 角色的逻辑高度(在现有实现中只会记录玩家脚底处的而为之作为角色位置,那对于碰撞箱居中逻辑的实现,还需要提供逻辑高度来计算得到,简单理解就是角色身高)

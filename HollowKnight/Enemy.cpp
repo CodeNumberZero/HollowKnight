@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "CollisionMgr.h"
 #include "ResourcesMgr.h"
+#include "EnemyStateNode.h"
 
 Enemy::Enemy()
 {
@@ -209,22 +210,20 @@ Enemy::Enemy()
 	animation_dash_on_floor_vfx_right.set_anchor_mode(AnchorMode::Centered);
 	animation_dash_on_floor_vfx_right.add_frame(ResourcesMgr::GetInstance()->find_atlas("enemy_vfx_dash_on_floor_right"));
 
-	//{
-	//	state_machine.register_state("aim", new EnemyAimState());
-	//	state_machine.register_state("dash_in_air", new EnemyDashInAirState());
-	//	state_machine.register_state("dash_on_floor", new EnemyDashOnFloorState());
-	//	state_machine.register_state("dead", new EnemyDeadState());
-	//	state_machine.register_state("fall", new EnemyFallState());
-	//	state_machine.register_state("idle", new EnemyIdleState());
-	//	state_machine.register_state("jump", new EnemyJumpState());
-	//	state_machine.register_state("run", new EnemyRunState());
-	//	state_machine.register_state("squat", new EnemySquatState());
-	//	state_machine.register_state("throw_barb", new EnemyThrowBarbState());
-	//	state_machine.register_state("throw_silk", new EnemyThrowSilkState());
-	//	state_machine.register_state("throw_sword", new EnemyThrowSwordState());
+	state_machine.register_state("aim", std::make_shared<EnemyAimState>());
+	state_machine.register_state("dash_in_air", std::make_shared<EnemyDashInAirState>());
+	state_machine.register_state("dash_on_floor", std::make_shared<EnemyDashOnFloorState>());
+	state_machine.register_state("dead", std::make_shared<EnemyDeadState>());
+	state_machine.register_state("fall", std::make_shared<EnemyFallState>());
+	state_machine.register_state("idle", std::make_shared<EnemyIdleState>());
+	state_machine.register_state("jump", std::make_shared<EnemyJumpState>());
+	state_machine.register_state("run", std::make_shared<EnemyRunState>());
+	state_machine.register_state("squat", std::make_shared<EnemySquatState>());
+	state_machine.register_state("throw_barb", std::make_shared<EnemyThrowBarbState>());
+	state_machine.register_state("throw_silk", std::make_shared<EnemyThrowSilkState>());
+	state_machine.register_state("throw_sword", std::make_shared<EnemyThrowSwordState>());
 
-	//	state_machine.set_entry("idle");
-	//}
+	state_machine.set_entry("idle");
 }
 
 Enemy::~Enemy()

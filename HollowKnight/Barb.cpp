@@ -41,7 +41,7 @@ Barb::Barb()
 		{
 			stage = Stage::Dash;
 			const MyVector& player_position = CharacterMgr::GetInstance()->get_player()->get_position();
-			velocity = (player_position - current_position).normalize() * SPEED_DASH;
+			velocity = (player_position - current_position).normalize() * ENEMY_BARB_SPEED_DASH;
 		}
 	});
 }

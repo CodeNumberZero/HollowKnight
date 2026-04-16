@@ -104,8 +104,9 @@ PlayerDeadState::PlayerDeadState()
 	timer.set_wait_time(2.0f);
 	timer.set_one_shot(true);
 	timer.set_on_timeout([&]() {
-		MessageBox(GetHWnd(), _T("不对...\n这样不行。"), _T("挑战失败！"), MB_OK); // MessageBox是WindowsAPI函数, 原生弹窗函数, 显示对话框;GetHWnd()获取父窗口句柄,弹窗会居中在游戏窗口上;MB_OK表示显示一个"确定"按钮
-	});
+		MessageBox(GetHWnd(), _T("不对...\n这样不行。"), _T("挑战失败！"), MB_OK);	// MessageBox是WindowsAPI函数, 原生弹窗函数, 显示对话框;GetHWnd()获取父窗口句柄,弹窗会居中在游戏窗口上;MB_OK表示显示一个"确定"按钮
+		exit(0);																// 0 = 正常退出;点击确定后游戏直接关闭，结束运行
+		});
 }
 
 void PlayerDeadState::on_enter()

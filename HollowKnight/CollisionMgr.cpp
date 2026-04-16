@@ -60,6 +60,7 @@ void CollisionMgr::ProcessCollide()
 	}
 }
 
+// ÏÔÊ¾Åö×²Ïä·½±ãµ÷ÊÔ
 void CollisionMgr::OnDebugRender()
 {
 	for (auto collision_box : CollisionBoxList) {
